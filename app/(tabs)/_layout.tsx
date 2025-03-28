@@ -7,7 +7,7 @@ import { icons } from '@/constants/icons';
 const TabIcon = ({ focused, icon, title }: any) => {
   if (!focused) {
     return (
-      <View className={'size-full justify-center items-center mt-4 rounded-full p-8 bg-primary'}>
+      <View className={'size-full justify-center items-center mt-4 rounded-full p-8 bg-[#0F0D23]'}>
         <Image source={icon} tintColor={'#A8B5DB'} className={'size-5'} />
       </View>
     );
