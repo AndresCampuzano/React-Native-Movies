@@ -7,9 +7,10 @@ interface Props {
   placeholder: string;
   value?: string;
   onChangeText?: (text: string) => void;
+  autoFocus?: boolean;
 }
 
-const SearchBar = ({ onPress, placeholder, value, onChangeText }: Props) => {
+const SearchBar = ({ onPress, placeholder, value, onChangeText, autoFocus }: Props) => {
   return (
     <View className={'flex-row items-center bg-dark-200 rounded-full px-5 py-4'}>
       <Image
@@ -25,6 +26,7 @@ const SearchBar = ({ onPress, placeholder, value, onChangeText }: Props) => {
         onChangeText={onChangeText}
         placeholderTextColor={'#A8B5DB'}
         className={'flex-1 ml-2 text-white'}
+        autoFocus={autoFocus}
       />
     </View>
   );
