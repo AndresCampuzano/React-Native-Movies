@@ -1,6 +1,13 @@
-# React Native Movies App
+<img width="440" alt="Screenshot 2025-03-31 at 6 19 51 PM" src="https://github.com/user-attachments/assets/e0844883-d4e0-49dc-a426-be780a5f8155" /># React Native Movies App
 
 A modern mobile application for browsing and searching movies using The Movie Database (TMDB) API and Appwrite backend integration. The app showcases trending movies and the latest releases with a clean, responsive UI.
+
+
+
+<img width="447" alt="Screenshot 2025-03-31 at 6 20 03 PM" src="https://github.com/user-attachments/assets/8bd3945b-f3bb-41c9-96de-a453ab0834ff" />
+<img width="468" alt="Screenshot 2025-03-31 at 6 19 38 PM" src="https://github.com/user-attachments/assets/54b317f2-27cf-4a55-97f8-23465af25a44" />
+<img width="440" alt="Screenshot 2025-03-31 at 6 19 51 PM" src="https://github.com/user-attachments/assets/b6113079-3f52-44f3-ae04-f2147bd93460" />
+
 
 ## Features
 
