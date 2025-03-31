@@ -6,9 +6,11 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  StatusBar,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { icons } from '@/constants/icons';
 import useFetch from '@/services/useFetch';
 import { fetchMovieDetails } from '@/services/api';
@@ -50,6 +52,7 @@ const Details = () => {
 
   return (
     <View className="flex-1">
+      <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
         <View>
           <Image
@@ -58,6 +61,12 @@ const Details = () => {
             }}
             className="w-full h-[550px]"
             resizeMode="stretch"
+          />
+          <LinearGradient
+            colors={['rgba(0,0,0,0.8)', 'transparent']}
+            style={StyleSheet.absoluteFill}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 0.5 }}
           />
           <View className="absolute left-5 bottom-3 flex-row flex items-center p-2 rounded-full gap-x-1 mt-2 bg-[#72727264]">
             <BlurView intensity={50} style={[StyleSheet.absoluteFill, { borderRadius: 50 }]} />
