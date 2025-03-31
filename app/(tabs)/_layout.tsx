@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { icons } from '@/constants/icons';
 import { Image } from 'react-native';
+import { BlurView } from 'expo-blur';
 
 const _Layout = () => {
   return (
@@ -9,10 +10,10 @@ const _Layout = () => {
       screenOptions={{
         tabBarStyle: {
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(10px)',
           position: 'absolute',
           borderTopWidth: 0,
         },
+        tabBarBackground: () => <BlurView intensity={10} style={{ flex: 1 }} />,
       }}
     >
       <Tabs.Screen
