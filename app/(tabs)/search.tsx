@@ -64,7 +64,7 @@ const Search = () => {
           ListHeaderComponent={
             <>
               <View className={'w-fill flex-row justify-center mt-20 items-center'}>
-                <Image source={icons.logo} className={'w-12 h-10'} />
+                <Image source={icons.logoBig} className={'w-32 mx-auto'} resizeMode={'contain'} />
               </View>
               <View className={'my-5'}>
                 <SearchBar
@@ -75,7 +75,7 @@ const Search = () => {
                 />
               </View>
 
-              {loading && <ActivityIndicator size={'large'} color={'#000000'} className={'my-3'} />}
+              {loading && <ActivityIndicator size={'large'} color={'#494949'} className={'my-3'} />}
 
               {error && <Text className={'text-red-500 px-5 my-3'}>Error: {error.message}</Text>}
 

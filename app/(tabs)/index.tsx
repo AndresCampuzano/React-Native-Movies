@@ -7,7 +7,6 @@ import {
   View,
   RefreshControl,
 } from 'react-native';
-import { images } from '@/constants/images';
 import { icons } from '@/constants/icons';
 import SearchBar from '@/components/SearchBar';
 import { useRouter } from 'expo-router';
@@ -53,10 +52,10 @@ export default function Index() {
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
-        <Image source={icons.logo} className={'w-12 h-10 mt-20 mb-5 mx-auto'} />
+        <Image source={icons.logoBig} className={'w-32 mt-20 mx-auto'} resizeMode={'contain'} />
 
         {loading || trendingLoading ? (
-          <ActivityIndicator size={'large'} color={'#fafafa'} className={'mt-10 self-center'} />
+          <ActivityIndicator size={'large'} color={'#494949'} className={'mt-10 self-center'} />
         ) : error || trendingError ? (
           <Text>Error: {error?.message || trendingError?.message}</Text>
         ) : (
@@ -64,6 +63,7 @@ export default function Index() {
             <SearchBar
               onPress={() => router.push('/search')}
               placeholder={'Search for a movie...'}
+              editable={false}
             />
 
             {trendingMovies && trendingMovies.length > 0 && (

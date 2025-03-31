@@ -1,10 +1,18 @@
-import { View, Text, Image, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { icons } from '@/constants/icons';
 import useFetch from '@/services/useFetch';
 import { fetchMovieDetails } from '@/services/api';
+import { BlurView } from 'expo-blur';
 
 interface MovieInfoProps {
   label: string;
@@ -13,8 +21,8 @@ interface MovieInfoProps {
 
 const MovieInfo = ({ label, value }: MovieInfoProps) => (
   <View className="flex-col items-start justify-center mt-5">
-    <Text className="font-bold text-sm">{label}</Text>
-    <Text className="font-normal text-sm mt-2">{value || 'N/A'}</Text>
+    <Text className="font-bold ">{label}</Text>
+    <Text className="font-normal  mt-2">{value || 'N/A'}</Text>
   </View>
 );
 
@@ -22,12 +30,20 @@ const Details = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
 
-  const { data, loading } = useFetch(() => fetchMovieDetails(id as string));
+  const { data, loading, error } = useFetch(() => fetchMovieDetails(id as string));
 
   if (loading) {
     return (
       <SafeAreaView className="flex-1">
         <ActivityIndicator />
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView className="flex-1 justify-center items-center">
+        <Text className="text-red-500">Error loading data</Text>
       </SafeAreaView>
     );
   }
@@ -43,21 +59,19 @@ const Details = () => {
             className="w-full h-[550px]"
             resizeMode="stretch"
           />
+          <View className="absolute left-5 bottom-3 flex-row flex items-center p-2 rounded-full gap-x-1 mt-2 bg-[#72727264]">
+            <BlurView intensity={50} style={[StyleSheet.absoluteFill, { borderRadius: 50 }]} />
+            <Image source={icons.star} className="size-4" />
+            <Text className="font-bold  ">{Math.round(data?.vote_average ?? 0)}/10</Text>
+            <Text className=" ">({data?.vote_count} votes)</Text>
+          </View>
         </View>
 
         <View className="flex-col items-start justify-center mt-5 px-5">
           <Text className=" font-bold text-xl">{data?.title}</Text>
           <View className="flex-row items-center gap-x-1 mt-2">
-            <Text className=" text-sm">{data?.release_date?.split('-')[0]} •</Text>
-            <Text className="text-light-200 text-sm">{data?.runtime}m</Text>
-          </View>
-
-          <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-2">
-            <Image source={icons.star} className="size-4" />
-
-            <Text className=" font-bold text-sm">{Math.round(data?.vote_average ?? 0)}/10</Text>
-
-            <Text className="text-light-200 text-sm">({data?.vote_count} votes)</Text>
+            <Text className=" ">{data?.release_date?.split('-')[0]} •</Text>
+            <Text className="text-gray-500 ">{data?.runtime}m</Text>
           </View>
 
           <MovieInfo label="Overview" value={data?.overview} />
@@ -79,11 +93,11 @@ const Details = () => {
       </ScrollView>
 
       <TouchableOpacity
-        className="absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
+        className="absolute bottom-7 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50"
         onPress={router.back}
       >
         <Image source={icons.arrow} className="size-5 mr-1 mt-0.5 rotate-180" tintColor="#fff" />
-        <Text className=" font-semibold text-base">Go Back</Text>
+        <Text className="font-semibold text-base text-white">Go Back</Text>
       </TouchableOpacity>
     </View>
   );
