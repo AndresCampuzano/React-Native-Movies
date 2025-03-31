@@ -51,7 +51,25 @@ export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> 
       Query.orderDesc('count'),
     ]);
 
-    return result.documents as unknown as TrendingMovie[];
+    const movies = result.documents as unknown as TrendingMovie[];
+
+    // Check for duplicates and delete the one with fewer counts
+    const movieMap = new Map<number, TrendingMovie>();
+    for (const movie of movies) {
+      if (movieMap.has(movie.movie_id)) {
+        const existingMovie = movieMap.get(movie.movie_id)!;
+        if (existingMovie.count < movie.count) {
+          await database.deleteDocument(DATABASE_ID, COLLECTION_ID, (existingMovie as any).$id);
+          movieMap.set(movie.movie_id, movie);
+        } else {
+          await database.deleteDocument(DATABASE_ID, COLLECTION_ID, (movie as any).$id);
+        }
+      } else {
+        movieMap.set(movie.movie_id, movie);
+      }
+    }
+
+    return Array.from(movieMap.values());
   } catch (error) {
     console.error(error);
     return undefined;
