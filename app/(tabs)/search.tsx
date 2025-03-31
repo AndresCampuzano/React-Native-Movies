@@ -14,6 +14,7 @@ import useFetch from '@/services/useFetch';
 import { fetchMovies } from '@/services/api';
 import { icons } from '@/constants/icons';
 import SearchBar from '@/components/SearchBar';
+import { updateSearchCount } from '@/services/appwrite';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,6 +27,11 @@ const Search = () => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await refetch();
+
+        if (data && data.length > 0) {
+          // Update search count in Appwrite
+          await updateSearchCount(searchQuery, data[0]);
+        }
       } else {
         reset();
       }
