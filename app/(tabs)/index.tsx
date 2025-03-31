@@ -16,6 +16,7 @@ import { fetchMovies } from '@/services/api';
 import MovieCard from '@/components/MovieCard';
 import { getTrendingMovies } from '@/services/appwrite';
 import { useState } from 'react';
+import TrendingCard from '@/components/TrendingCard';
 
 export default function Index() {
   const router = useRouter();
@@ -74,39 +75,31 @@ export default function Index() {
               </>
             )}
 
-            <>
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View className={'w-4'} />}
-                className={'mb-4 mt-3'}
-                data={trendingMovies}
-                renderItem={({ item, index }) => (
-                  <>
-                    <Text className={'text-white text-sm'}>
-                      {index + 1}. {item.title}
-                    </Text>
-                  </>
-                )}
-                keyExtractor={item => item.movie_id.toString()}
-              />
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View className={'w-4'} />}
+              className={'mb-4 mt-3'}
+              data={trendingMovies}
+              renderItem={({ item, index }) => <TrendingCard movie={item} index={index} />}
+              keyExtractor={item => item.movie_id.toString()}
+            />
 
-              <Text className={'text-lg text-white font-bold mt-5 mb-3'}>Latest Movies</Text>
+            <Text className={'text-lg text-white font-bold mt-5 mb-3'}>Latest Movies</Text>
 
-              <FlatList
-                data={data}
-                renderItem={({ item }) => <MovieCard {...item} />}
-                keyExtractor={item => item.id.toString()}
-                numColumns={3}
-                columnWrapperStyle={{
-                  gap: 20,
-                  paddingRight: 5,
-                  marginBottom: 20,
-                }}
-                className={'mt-2 pb-32'}
-                scrollEnabled={false}
-              />
-            </>
+            <FlatList
+              data={data}
+              renderItem={({ item }) => <MovieCard {...item} />}
+              keyExtractor={item => item.id.toString()}
+              numColumns={3}
+              columnWrapperStyle={{
+                gap: 20,
+                paddingRight: 5,
+                marginBottom: 20,
+              }}
+              className={'mt-2 pb-32'}
+              scrollEnabled={false}
+            />
           </View>
         )}
       </ScrollView>
