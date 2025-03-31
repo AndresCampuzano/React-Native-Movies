@@ -59,10 +59,7 @@ export const getTrendingMovies = async (): Promise<TrendingMovie[] | undefined> 
       if (movieMap.has(movie.movie_id)) {
         const existingMovie = movieMap.get(movie.movie_id)!;
         if (existingMovie.count < movie.count) {
-          await database.deleteDocument(DATABASE_ID, COLLECTION_ID, (existingMovie as any).$id);
           movieMap.set(movie.movie_id, movie);
-        } else {
-          await database.deleteDocument(DATABASE_ID, COLLECTION_ID, (movie as any).$id);
         }
       } else {
         movieMap.set(movie.movie_id, movie);
