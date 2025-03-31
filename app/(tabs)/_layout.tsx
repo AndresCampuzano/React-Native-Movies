@@ -9,11 +9,11 @@ const _Layout = () => {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backgroundColor: 'rgba(229,229,229,0.7)',
           position: 'absolute',
-          borderTopWidth: 0,
+          borderTopWidth: 1,
         },
-        tabBarBackground: () => <BlurView intensity={10} style={{ flex: 1 }} />,
+        tabBarBackground: () => <BlurView intensity={30} style={{ flex: 1 }} />,
       }}
     >
       <Tabs.Screen

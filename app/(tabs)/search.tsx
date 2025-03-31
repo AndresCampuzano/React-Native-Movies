@@ -48,9 +48,7 @@ const Search = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <View className={'flex-1 bg-primary'}>
-        <Image source={images.bg} className={'flex-1 absolute w-full z-0'} resizeMode={'cover'} />
-
+      <View className={'flex-1'}>
         <FlatList
           data={data}
           renderItem={({ item }) => <MovieCard {...item} />}
@@ -77,12 +75,12 @@ const Search = () => {
                 />
               </View>
 
-              {loading && <ActivityIndicator size={'large'} color={'#fafafa'} className={'my-3'} />}
+              {loading && <ActivityIndicator size={'large'} color={'#000000'} className={'my-3'} />}
 
               {error && <Text className={'text-red-500 px-5 my-3'}>Error: {error.message}</Text>}
 
               {!loading && !error && searchQuery.trim() && data?.length! > 0 && (
-                <Text className="text-xl text-white font-bold mb-3">
+                <Text className="text-xl  font-bold mb-3">
                   Search Results for <Text className="text-accent">{searchQuery}</Text>
                 </Text>
               )}

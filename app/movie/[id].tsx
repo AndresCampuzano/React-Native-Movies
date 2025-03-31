@@ -13,8 +13,8 @@ interface MovieInfoProps {
 
 const MovieInfo = ({ label, value }: MovieInfoProps) => (
   <View className="flex-col items-start justify-center mt-5">
-    <Text className="text-light-200 font-normal text-sm">{label}</Text>
-    <Text className="text-light-100 font-bold text-sm mt-2">{value || 'N/A'}</Text>
+    <Text className="font-bold text-sm">{label}</Text>
+    <Text className="font-normal text-sm mt-2">{value || 'N/A'}</Text>
   </View>
 );
 
@@ -26,14 +26,14 @@ const Details = () => {
 
   if (loading) {
     return (
-      <SafeAreaView className="bg-primary flex-1">
+      <SafeAreaView className="flex-1">
         <ActivityIndicator />
       </SafeAreaView>
     );
   }
 
   return (
-    <View className="bg-primary flex-1">
+    <View className="flex-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
         <View>
           <Image
@@ -46,18 +46,16 @@ const Details = () => {
         </View>
 
         <View className="flex-col items-start justify-center mt-5 px-5">
-          <Text className="text-white font-bold text-xl">{data?.title}</Text>
+          <Text className=" font-bold text-xl">{data?.title}</Text>
           <View className="flex-row items-center gap-x-1 mt-2">
-            <Text className="text-light-200 text-sm">{data?.release_date?.split('-')[0]} •</Text>
+            <Text className=" text-sm">{data?.release_date?.split('-')[0]} •</Text>
             <Text className="text-light-200 text-sm">{data?.runtime}m</Text>
           </View>
 
           <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-2">
             <Image source={icons.star} className="size-4" />
 
-            <Text className="text-white font-bold text-sm">
-              {Math.round(data?.vote_average ?? 0)}/10
-            </Text>
+            <Text className=" font-bold text-sm">{Math.round(data?.vote_average ?? 0)}/10</Text>
 
             <Text className="text-light-200 text-sm">({data?.vote_count} votes)</Text>
           </View>
@@ -85,7 +83,7 @@ const Details = () => {
         onPress={router.back}
       >
         <Image source={icons.arrow} className="size-5 mr-1 mt-0.5 rotate-180" tintColor="#fff" />
-        <Text className="text-white font-semibold text-base">Go Back</Text>
+        <Text className=" font-semibold text-base">Go Back</Text>
       </TouchableOpacity>
     </View>
   );

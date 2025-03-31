@@ -46,8 +46,7 @@ export default function Index() {
   };
 
   return (
-    <View className={'flex-1 bg-primary'}>
-      <Image source={images.bg} className={'absolute w-full z-0'} />
+    <View className={'flex-1'}>
       <ScrollView
         className={'flex-1 px-5'}
         showsVerticalScrollIndicator={false}
@@ -70,7 +69,7 @@ export default function Index() {
             {trendingMovies && trendingMovies.length > 0 && (
               <>
                 <View className={'mt-10'}>
-                  <Text className={'text-lg text-white font-bold mb-3'}>Trending Movies</Text>
+                  <Text className={'text-lg font-bold mb-3'}>Most searched movies</Text>
                 </View>
 
                 <FlatList
@@ -85,7 +84,7 @@ export default function Index() {
               </>
             )}
 
-            <Text className={'text-lg text-white font-bold mt-5 mb-3'}>Latest Movies</Text>
+            <Text className={'text-lg  font-bold mt-5 mb-3'}>Latest Movies</Text>
 
             <FlatList
               data={data}

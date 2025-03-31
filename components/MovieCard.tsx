@@ -16,7 +16,7 @@ const MovieCard = ({ id, poster_path, title, vote_average, release_date }: Movie
           resizeMode={'cover'}
         />
 
-        <Text className={'text-sm font-bold text-white mt-2'} numberOfLines={1}>
+        <Text className={'text-sm font-bold  mt-2'} numberOfLines={1}>
           {title}
         </Text>
         <View className={'flex-row items-center mt-1'}>
@@ -26,10 +26,10 @@ const MovieCard = ({ id, poster_path, title, vote_average, release_date }: Movie
               className={'w-4 h-4 mr-1'}
               resizeMode={'contain'}
             />
-            <Text className={'text-xs text-white font-semibold'}>{Math.round(vote_average)}</Text>
+            <Text className={'text-xs font-semibold'}>{Math.round(vote_average)}</Text>
           </View>
           <Text className={'text-gray-400'}> | </Text>
-          <Text className={'text-xs text-gray-400 font-semibold '}>
+          <Text className={'text-xs text-gray-500 font-semibold '}>
             {new Date(release_date).getFullYear()}
           </Text>
         </View>
