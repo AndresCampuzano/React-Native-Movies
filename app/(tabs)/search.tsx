@@ -23,21 +23,25 @@ const Search = () => {
     false
   );
 
+  // Debounce search input
   useEffect(() => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
         await refetch();
-
-        if (data && data.length > 0) {
-          // Update search count in Appwrite
-          await updateSearchCount(searchQuery, data[0]);
-        }
       } else {
         reset();
       }
     }, 500);
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  // Update search count in Appwrite
+  useEffect(() => {
+    if (searchQuery.trim() && data?.length) {
+      const movie = data[0];
+      updateSearchCount(searchQuery.trim().toLowerCase(), movie);
+    }
+  }, [data]);
 
   return (
     <KeyboardAvoidingView

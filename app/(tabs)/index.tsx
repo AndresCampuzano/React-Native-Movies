@@ -1,4 +1,12 @@
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  View,
+  RefreshControl,
+} from 'react-native';
 import { images } from '@/constants/images';
 import { icons } from '@/constants/icons';
 import SearchBar from '@/components/SearchBar';
@@ -6,11 +14,35 @@ import { useRouter } from 'expo-router';
 import useFetch from '@/services/useFetch';
 import { fetchMovies } from '@/services/api';
 import MovieCard from '@/components/MovieCard';
+import { getTrendingMovies } from '@/services/appwrite';
+import { useState } from 'react';
 
 export default function Index() {
   const router = useRouter();
+  const [refreshing, setRefreshing] = useState(false);
 
-  const { data, loading, error } = useFetch(() => fetchMovies({ query: '' }));
+  const {
+    data: trendingMovies,
+    loading: trendingLoading,
+    error: trendingError,
+    refetch: refetchTrendingMovies,
+  } = useFetch(getTrendingMovies);
+
+  const {
+    data,
+    loading,
+    error,
+    refetch: refetchMovies,
+  } = useFetch(() => fetchMovies({ query: '' }));
+
+  /**
+   * Refreshes the trending movies and latest movies when the user pulls down the list.
+   */
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await Promise.all([refetchTrendingMovies(), refetchMovies()]);
+    setRefreshing(false);
+  };
 
   return (
     <View className={'flex-1 bg-primary'}>
@@ -19,13 +51,14 @@ export default function Index() {
         className={'flex-1 px-5'}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ minHeight: '100%', paddingBottom: 10 }}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         <Image source={icons.logo} className={'w-12 h-10 mt-20 mb-5 mx-auto'} />
 
-        {loading ? (
+        {loading || trendingLoading ? (
           <ActivityIndicator size={'large'} color={'#0000ff'} className={'mt-10 self-center'} />
-        ) : error ? (
-          <Text>Error: {error.message}</Text>
+        ) : error || trendingError ? (
+          <Text>Error: {error?.message || trendingError?.message}</Text>
         ) : (
           <View className={'flex-1 mt-5'}>
             <SearchBar
@@ -33,7 +66,31 @@ export default function Index() {
               placeholder={'Search for a movie...'}
             />
 
+            {trendingMovies && trendingMovies.length > 0 && (
+              <>
+                <View className={'mt-10'}>
+                  <Text className={'text-lg text-white font-bold mb-3'}>Trending Movies</Text>
+                </View>
+              </>
+            )}
+
             <>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View className={'w-4'} />}
+                className={'mb-4 mt-3'}
+                data={trendingMovies}
+                renderItem={({ item, index }) => (
+                  <>
+                    <Text className={'text-white text-sm'}>
+                      {index + 1}. {item.title}
+                    </Text>
+                  </>
+                )}
+                keyExtractor={item => item.movie_id.toString()}
+              />
+
               <Text className={'text-lg text-white font-bold mt-5 mb-3'}>Latest Movies</Text>
 
               <FlatList
