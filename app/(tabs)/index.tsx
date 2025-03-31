@@ -57,7 +57,7 @@ export default function Index() {
         <Image source={icons.logo} className={'w-12 h-10 mt-20 mb-5 mx-auto'} />
 
         {loading || trendingLoading ? (
-          <ActivityIndicator size={'large'} color={'#0000ff'} className={'mt-10 self-center'} />
+          <ActivityIndicator size={'large'} color={'#fafafa'} className={'mt-10 self-center'} />
         ) : error || trendingError ? (
           <Text>Error: {error?.message || trendingError?.message}</Text>
         ) : (

@@ -77,7 +77,7 @@ const Search = () => {
                 />
               </View>
 
-              {loading && <ActivityIndicator size={'large'} color={'#0000ff'} className={'my-3'} />}
+              {loading && <ActivityIndicator size={'large'} color={'#fafafa'} className={'my-3'} />}
 
               {error && <Text className={'text-red-500 px-5 my-3'}>Error: {error.message}</Text>}
 
